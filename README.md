@@ -179,3 +179,30 @@ Project Link: [https://github.com/gp3man/TonyThymeBlog_next_v1](https://github.c
 [Prisma-url]: https://www.prisma.io/
 [Contentful.com]:https://img.shields.io/badge/Contentful-2024?style=for-the-badge&logo=contentful&color=A0A0A0
 [Contentful-url]: https://www.contentful.com/
+
+
+## Store & Square Payments
+
+This project includes a small demo store at `/store` that can create Square-hosted checkout pages for a few sample products.
+
+Setup:
+
+1. Install the Square SDK:
+
+  npm install @square/square
+
+2. Add the following environment variables (for local development, use a `.env.local` file):
+
+  - SQUARE_ACCESS_TOKEN (from your Square dashboard)
+  - SQUARE_LOCATION_ID (the location to create the checkout for)
+  - NEXT_PUBLIC_SITE_URL (optional, defaults to http://localhost:3000)
+  - SQUARE_ENVIRONMENT (optional, `sandbox` or `production`, defaults to `sandbox`)
+
+3. Run the app and open `http://localhost:3000/store` to view the store. Clicking a product will create a checkout and redirect to Square's hosted checkout page.
+
+Notes:
+
+- This is a minimal example using Square's server-side Checkout API. In production you should:
+  - Securely store and rotate your Square access token.
+  - Validate webhooks from Square to mark orders as paid.
+  - Add proper order persistence (database) if you want to track purchases.
