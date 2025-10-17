@@ -1,4 +1,4 @@
-import { previewClient } from "@/lib/contentful";
+import { getPreviewClient } from "@/lib/contentful";
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
 export async function GET(request) {
@@ -20,6 +20,11 @@ function extractPost(fetchResponse) {
   return fetchResponse?.items?.[0];
 }
 async function getPreviewPostBySlug(slug) {
+  const previewClient = getPreviewClient();
+  if (!previewClient) {
+    throw new Error('Contentful preview client not configured');
+  }
+
   const NextResponse = await previewClient.getEntries({
     content_type: "recipe",
     "fields.slug": slug,

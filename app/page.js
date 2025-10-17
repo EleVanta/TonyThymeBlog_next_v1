@@ -4,10 +4,10 @@ import Recipes from "./recipes/page.js";
 
 export default async function Home() {
   const res = await getTour();
-  const {tourCollection}= res;
+  const tourCollection = res?.tourCollection;
   return (
     <main className="flex m-0">
-      {tourCollection.items.length ? <LandingPage data={res} /> : <Recipes />}
+      {tourCollection?.items?.length ? <LandingPage data={res} /> : <Recipes />}
     </main>
   );
 }

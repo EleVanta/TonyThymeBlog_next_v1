@@ -27,8 +27,9 @@ export function generateMetadata() {
 
 export const revalidate = 200;
 export default async function RootLayout({ children }) {
-  const { modalCollection } = await getNewsletter();
-  const NLContent = modalCollection.items[0];
+  const newsletter = await getNewsletter();
+  const modalCollection = newsletter?.modalCollection;
+  const NLContent = modalCollection?.items?.[0] ?? null;
   return (
     <html lang="en" className="m-0" style={{scrollBehavior:"smooth"}}>
       <body

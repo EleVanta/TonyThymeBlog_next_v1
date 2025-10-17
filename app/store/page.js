@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import products from '../../lib/products';
 import dynamic from 'next/dynamic';
