@@ -1,6 +1,6 @@
 import Image from "next/image";
 import RichText from "../components/RichText";
-import { client } from "@/lib/contentful";
+import { getClient } from "@/lib/contentful";
 import { nextImageLoader } from "../components/RecipeImage";
 import Modal from "../modal/page";
 import NewsletterModal from "../components/modals/NewsletterModal";
@@ -8,7 +8,16 @@ import { fetchNewsletter } from "../recipes/actions";
 
 const AboutMe = async () => {
   const  {modalCollection}  = await fetchNewsletter();
-  const NLContent = modalCollection.items[0];
+  const NLContent = modalCollection?.items?.[0];
+  const client = getClient();
+  if (!client) {
+    // Contentful not configured; return a minimal page
+    return (
+      <div className="py-16 min-h-screen px-10 md:px-40 lg:px-[300px]">
+        <p>Content is unavailable. Contentful not configured for this environment.</p>
+      </div>
+    );
+  }
   const response = await client.getEntries({
     content_type: "aboutMePage",
   });

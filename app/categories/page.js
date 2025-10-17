@@ -3,8 +3,8 @@ import Link from "next/link";
 import HoverCatCard from "../components/HoverCatCard";
 
 const AllCategories = async () => {
-  const { categoryCollection } = await getCategories();
-  const categories = categoryCollection?.items;
+  const result = await getCategories();
+  const categories = result?.categoryCollection?.items ?? [];
   return (
     <section className=" flex flex-col text-center w-full min-h-[86vh] mt-16 px-9 text-base-content">
       <h1 className="my-6 font-black text-xl">All Categories</h1>

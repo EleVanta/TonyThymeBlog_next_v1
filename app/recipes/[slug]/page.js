@@ -1,4 +1,4 @@
-import { client, previewClient } from "@/lib/contentful.js";
+import { getClient, getPreviewClient } from "@/lib/contentful.js";
 import RichText from "../../components/RichText";
 import PhotoCard from "../../components/PhotoCard";
 import Checkbox from "@/app/components/CheckBox";
@@ -40,8 +40,14 @@ export default async function RecipePage({ params }) {
     }
   };
   const session = await getServerSession(authOptions);
-  const currentClient = preview ? client : client;
-  // console.log('client: ', currentClient);
+  const currentClient = preview ? getPreviewClient() : getClient();
+  if (!currentClient) {
+    return (
+      <section className="p-8">
+        <p>Content is unavailable. Contentful not configured for this environment.</p>
+      </section>
+    );
+  }
   const response = await currentClient.getEntries({
     content_type: "recipe",
     "fields.slug": params.slug,
