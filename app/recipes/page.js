@@ -6,8 +6,9 @@ import Modal from "../modal/page";
 import NewsletterModal from "../components/modals/NewsletterModal";
 import { v4 as uuidv4 } from "uuid";
 export default async function Recipes({ searchParams }) {
-  const  {modalCollection}  = await fetchNewsletter();
-  const NLContent = modalCollection.items[0];
+  const newsletterData = await fetchNewsletter().catch(() => null);
+  const modalCollection = newsletterData?.modalCollection;
+  const NLContent = modalCollection?.items?.[0] ?? null;
   const search =
     typeof searchParams?.search === "string" ? searchParams.search : undefined;
   const { recipeCollection, categoryCollection } = await fetchRecipes({

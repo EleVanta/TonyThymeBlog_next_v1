@@ -28,7 +28,7 @@ export function generateMetadata() {
 
 export const revalidate = 200;
 export default async function RootLayout({ children }) {
-  const newsletter = await getNewsletter();
+  const newsletter = await getNewsletter().catch(() => null);
   const modalCollection = newsletter?.modalCollection;
   let NLContent = modalCollection?.items?.[0] ?? null;
   // If running in a preview and Contentful is not configured, fall back to sample data

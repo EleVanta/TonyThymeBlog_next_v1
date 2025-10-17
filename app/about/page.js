@@ -7,8 +7,9 @@ import NewsletterModal from "../components/modals/NewsletterModal";
 import { fetchNewsletter } from "../recipes/actions";
 
 const AboutMe = async () => {
-  const  {modalCollection}  = await fetchNewsletter();
-  const NLContent = modalCollection?.items?.[0];
+  const newsletterData = await fetchNewsletter().catch(() => null);
+  const modalCollection = newsletterData?.modalCollection;
+  const NLContent = modalCollection?.items?.[0] ?? null;
   const client = getClient();
   if (!client) {
     // Contentful not configured; return a minimal page
