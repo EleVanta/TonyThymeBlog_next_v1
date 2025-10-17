@@ -6,6 +6,7 @@ import NextAuthSessionProvider from "./providers/sessionProvider.js";
 import Newsletter from "./components/form/Newsletter";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { getNewsletter } from "@/lib/getRecipes";
+import { sampleNewsletter } from '@/lib/sampleData';
 const figtree = Figtree({ subsets: ["latin"] });
 import * as Sentry from '@sentry/nextjs';
 
@@ -29,7 +30,9 @@ export const revalidate = 200;
 export default async function RootLayout({ children }) {
   const newsletter = await getNewsletter();
   const modalCollection = newsletter?.modalCollection;
-  const NLContent = modalCollection?.items?.[0] ?? null;
+  let NLContent = modalCollection?.items?.[0] ?? null;
+  // If running in a preview and Contentful is not configured, fall back to sample data
+  if (!NLContent) NLContent = sampleNewsletter;
   return (
     <html lang="en" className="m-0" style={{scrollBehavior:"smooth"}}>
       <body
